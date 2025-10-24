@@ -1,0 +1,51 @@
+<?xml version="1.0" ?>
+<!DOCTYPE nmaprun
+  PUBLIC "-//KONAMI//DTD nmap XML 1.05//EN"
+  "https://nmap.org/book/nmap.dtd">
+
+<nmaprun scanner="nmap" args="nmap -sV --script=vulners -oX scan.xml" start="1708452800" startstr="Tue 2023‑12‑25 10:00:00 UTC" version="7.92" xmloutputversion="1.05">
+  <scaninfo type="connect" protocol="tcp" numservices="1" services="22"/>
+  <verbose level="0"/>
+  <debugging level="0"/>
+
+  <host>
+    <status state="up" reason="host-response"/>
+    <address addr="192.168.1.42" addrtype="ipv4"/>
+    <hostnames>
+      <hostname name="victim.example.local" type="PTR"/>
+    </hostnames>
+
+    <ports>
+
+      <port protocol="tcp" portid="22">
+        <state state="open" reason="syn-ack"/>
+
+        <service name="ssh" product="OpenSSH" version="8.9p1" extrainfo="OpenSSH 8.9p1 (protocol 2.0)" method="table" conf="3"/>
+
+        <script id="vulners" output="
+CVE-2023-23456   7.5  Critical   OpenSSH 7.9p1 or earlier – CVE-2023‑23456 (remote code execution)
+CVE-2022-12345   6.9  High       OpenSSH 7.5 – CVE-2022‑12345 (privilege escalation)
+"/>
+      </port>
+
+      <port protocol="tcp" portid="80">
+        <state state="open" reason="syn-ack"/>
+
+        <service name="http" product="Apache httpd" version="2.4.51" extrainfo="Apache/2.4.51 (Unix)" method="table" conf="3"/>
+
+        <script id="vulners" output="
+CVE-2023-43210   8.1  Critical   Apache HTTPD 2.4.50 – CVE-2023‑43210 (unauthenticated DoS)
+"/>
+      </port>
+    </ports>
+
+    <os>
+      <osmatch name="Linux 4.15 - 5.4" accuracy="100" line="1"/>
+    </os>
+  </host>
+
+  <runstats>
+    <finished time="1708452810" timestr="Tue 2023‑12‑25 10:00:10 UTC" elapsed="10"/>
+    <hosts sent="1" received="1" totalfails="0" uptodate="1"/>
+  </runstats>
+</nmaprun>
